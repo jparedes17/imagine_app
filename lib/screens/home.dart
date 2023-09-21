@@ -1,7 +1,10 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
 import 'package:imagine_apps/providers/db_provider.dart';
 import 'package:imagine_apps/screens/add_work.dart';
 import 'package:imagine_apps/screens/edit_work.dart';
+import 'package:imagine_apps/screens/login.dart';
 import 'package:provider/provider.dart';
 
 class Item {
@@ -14,7 +17,7 @@ class Item {
 }
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -64,10 +67,22 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const AddWorkForm()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const AddWorkForm()));
               },
-              icon: const Icon(Icons.add_circle_rounded, size: 35))
+              icon: const Icon(Icons.add_circle_rounded, size: 35)),
+          IconButton(
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginForm(),
+                    ),
+                    (route) => false);
+              },
+              icon: const Icon(Icons.logout, size: 35))
         ],
         backgroundColor: Colors.orange,
         title: const Text('Empleos por Estado'),
@@ -92,7 +107,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   Widget _buildEmpleosList(List<dynamic> empleosList) {
-    final dbProvider db = Provider.of<dbProvider>(context);
     return ListView.separated(
       separatorBuilder: (context, index) {
         return const SizedBox(
@@ -156,22 +170,29 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   TextButton(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.orange),
-                      padding: MaterialStateProperty.all(const EdgeInsets.all(15)),
+                      padding:
+                          MaterialStateProperty.all(const EdgeInsets.all(15)),
                     ),
                     onPressed: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => EditWorkForm(id: empleosList[index]['id'],),
+                            builder: (context) => EditWorkForm(
+                              id: empleosList[index]['id'],
+                            ),
                           ));
                     },
-                    child: const Text('Editar', style: TextStyle(color: Colors.white)),
+                    child: const Text('Editar',
+                        style: TextStyle(color: Colors.white)),
                   ),
-                  const SizedBox(height: 20,),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   TextButton(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.red),
-                      padding: MaterialStateProperty.all(const EdgeInsets.all(15)),
+                      padding:
+                          MaterialStateProperty.all(const EdgeInsets.all(15)),
                     ),
                     onPressed: () async {
                       final confirm = await showDialog(
@@ -194,11 +215,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       context,
                                       listen: false);
                                   db.deleteWork(empleosList[index]['id']);
-                                  
+
                                   Navigator.pushAndRemoveUntil(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => HomeScreen(),
+                                        builder: (context) =>
+                                            const HomeScreen(),
                                       ),
                                       (route) => false);
                                 },
@@ -212,7 +234,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         setState(() {});
                       }
                     },
-                    child: const Text('Eliminar',  style: TextStyle(color: Colors.white)),
+                    child: const Text('Eliminar',
+                        style: TextStyle(color: Colors.white)),
                   ),
                 ],
               )

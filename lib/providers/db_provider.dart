@@ -119,7 +119,7 @@ class dbProvider extends ChangeNotifier {
       'id': id,
     };
 
-    final url = Uri.http(_baseUrl, '/tareas/${id}');
+    final url = Uri.http(_baseUrl, '/tareas/$id');
 
     final resp = await http.delete(url, body: json.encode(authData), headers: {
       'Content-Type': 'application/json; charset=UTF-8',

@@ -4,15 +4,15 @@ class InputDecorations {
   static InputDecoration formInputDecoration(
       {required String hintText, required String labelText, required Icon prefixIcon}) {
     return InputDecoration(
-        enabledBorder: UnderlineInputBorder(
+        enabledBorder: const UnderlineInputBorder(
             borderSide: BorderSide(
           color: Colors.black,
         )),
-        focusedBorder: UnderlineInputBorder(
+        focusedBorder: const UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.black, width: 2)),
         hintText: hintText,
         labelText: labelText,
-        labelStyle: TextStyle(color: Colors.grey),
+        labelStyle: const TextStyle(color: Colors.grey),
         prefixIcon: prefixIcon,
         prefixIconColor: Colors.black);
   }
