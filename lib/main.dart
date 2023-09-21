@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:imagine_apps/providers/db_provider.dart';
+import 'package:imagine_apps/screens/add_work.dart';
+import 'package:imagine_apps/screens/edit_work.dart';
+import 'package:imagine_apps/screens/home.dart';
+import 'package:imagine_apps/screens/login.dart';
+import 'package:imagine_apps/screens/register.dart';
+import 'package:provider/provider.dart';
 
 void main() => runApp(const MyApp());
 
@@ -7,14 +14,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Material App',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Material App Bar'),
-        ),
-        body: const Center(
-          child: Text('Hello World'),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => dbProvider())
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Material App',
+        home: Scaffold(
+          body: LoginForm(),
         ),
       ),
     );
